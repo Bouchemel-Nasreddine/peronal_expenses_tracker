@@ -1,28 +1,76 @@
 import 'package:flutter/material.dart';
-import 'package:peronal_expenses_tracker/widgets/transcation_interface.dart';
+
+import './models/transaction.dart';
+import './widgets/transaction_input.dart';
+import './widgets/transaction_list.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Personal Expense Tracker',
+      title: 'Personal Expenses Tracker',
+      theme: ThemeData(
+        primarySwatch: Colors.purple,
+        accentColor: Colors.amber,
+      ),
       home: MyHomePage(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  // This widget is the root of your application.
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  final List<Transaction> _transactions = [
+    Transaction(
+      id: ('t1'),
+      title: 'new shoes',
+      amount: 69.99,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: ('t2'),
+      title: 'grocery',
+      amount: 49.72,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: ('t3'),
+      title: 'internet fee',
+      amount: 15.99,
+      date: DateTime.now(),
+    ),
+  ];
+
+  void _addTransaction(String title, double amount) {
+    final newTransaction = Transaction(
+      id: DateTime.now().toString(),
+      title: title,
+      amount: amount,
+      date: DateTime.now(),
+    );
+
+    setState(() {
+      _transactions.add(newTransaction);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Personal Expense Tracker'),
+        title: Text('Personal Expenses Tracker'),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              _startAddNewTransaction(context);
+            },
             icon: Icon(Icons.add),
           )
         ],
@@ -38,14 +86,24 @@ class MyHomePage extends StatelessWidget {
               elevation: 5,
             ),
           ),
-          TransactionInterface(),
+          TransactionList(_transactions),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          _startAddNewTransaction(context);
+        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
+  }
+
+  void _startAddNewTransaction(BuildContext ctx) {
+    showModalBottomSheet(
+        context: ctx,
+        builder: (_) {
+          return TransactionInput(_addTransaction);
+        });
   }
 }
