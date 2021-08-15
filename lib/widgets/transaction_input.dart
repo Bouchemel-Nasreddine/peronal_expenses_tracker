@@ -23,17 +23,28 @@ class TransactionInput extends StatelessWidget {
             TextField(
               decoration: InputDecoration(labelText: 'Amount'),
               controller: amountController,
+              keyboardType: TextInputType.number,
+              onSubmitted: (_) => submitTransaction(),
             ),
             TextButton(
-              onPressed: () {
-                this.addTransaction(
-                    titleController.text, double.parse(amountController.text));
-              },
+              onPressed: submitTransaction,
               child: Text('add transaction'),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  void submitTransaction() {
+    final enteredTitle = titleController.text;
+    final enteredAmount = double.parse(amountController.text);
+
+    if (enteredTitle.isEmpty || enteredAmount <= 0) return;
+
+    this.addTransaction(
+      enteredTitle,
+      enteredAmount,
     );
   }
 }
