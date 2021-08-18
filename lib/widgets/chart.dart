@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:peronal_expenses_tracker/models/transaction.dart';
+import 'package:peronal_expenses_tracker/widgets/chart_bar.dart';
 
 class Chart extends StatelessWidget {
   final List<Transaction> recentTransactions;
@@ -15,8 +16,10 @@ class Chart extends StatelessWidget {
       margin: EdgeInsets.all(20),
       child: Row(
         children: groupedTransactionsValues.map((data) {
-          return Text(
-            '${data['day']}: ${data['amount']}',
+          return ChartBar(
+            (data['day'] as String),
+            (data['amount'] as double),
+            totalsSpending == 0.0 ? 0.0 : (data['amount'] as double) / totalsSpending,
           );
         }).toList(),
       ),
@@ -37,13 +40,16 @@ class Chart extends StatelessWidget {
           totalSum += recentTransactions[i].amount;
       }
 
-      print(DateFormat.E().format(weekDay));
-      print(totalSum);
-
       return {
-        'day': DateFormat.E().format(weekDay),
+        'day': DateFormat.E().format(weekDay).substring(0, 1),
         'amount': totalSum,
       };
+    });
+  }
+
+  double get totalsSpending {
+    return groupedTransactionsValues.fold(0.0, (previousValue, element) {
+      return previousValue + (element['amount'] as double);
     });
   }
 }
