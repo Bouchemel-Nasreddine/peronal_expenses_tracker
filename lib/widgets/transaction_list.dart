@@ -35,23 +35,30 @@ class TransactionList extends StatelessWidget {
                 return Card(
                   child: Row(
                     children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.symmetric(
-                          vertical: 10,
-                          horizontal: 15,
-                        ),
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
+                      SizedBox(
+                        width: 130,
+                        child: Container(
+                          margin: EdgeInsets.symmetric(
+                            vertical: 10,
+                            horizontal: 15,
+                          ),
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
                             border: Border.all(
-                          color: Theme.of(context).primaryColor,
-                          width: 2,
-                        )),
-                        child: Text(
-                          '\$${transactions[index].amount.toStringAsFixed(2)}',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: Colors.purple,
+                              color: Theme.of(context).primaryColor,
+                              width: 2,
+                            ),
+                          ),
+                          child: Center(
+                            child: Text(
+                              '\$${transactions[index].amount.toStringAsFixed(2)}',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Colors.purple,
+                              ),
+                            ),
                           ),
                         ),
                       ),
