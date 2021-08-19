@@ -55,6 +55,10 @@ class TransactionList extends StatelessWidget {
                     subtitle: Text(
                       DateFormat.yMMMd().format(transactions[index].date),
                     ),
+                    trailing: ElevatedButton(
+                      child: Icon(Icons.delete),
+                      onPressed: () {},
+                    ),
                   ),
                 );
               },
@@ -62,4 +66,9 @@ class TransactionList extends StatelessWidget {
             ),
     );
   }
+
+  void _deleteTransaction(int index) {
+
+  }
+
 }
