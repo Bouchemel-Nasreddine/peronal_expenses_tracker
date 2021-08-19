@@ -3,9 +3,10 @@ import 'package:intl/intl.dart';
 import 'package:peronal_expenses_tracker/models/transaction.dart';
 
 class TransactionList extends StatelessWidget {
+  final void Function(String) deleteTransaction;
   final List<Transaction> transactions;
 
-  TransactionList(this.transactions);
+  TransactionList(this.transactions, this.deleteTransaction);
 
   @override
   Widget build(BuildContext context) {
@@ -39,36 +40,33 @@ class TransactionList extends StatelessWidget {
                     horizontal: 5,
                   ),
                   child: ListTile(
-                    leading: CircleAvatar(
-                      radius: 30,
-                      child: Padding(
-                        padding: EdgeInsets.all(6),
-                        child: FittedBox(
-                          child: Text('\$${transactions[index].amount}'),
+                      leading: CircleAvatar(
+                        radius: 30,
+                        child: Padding(
+                          padding: EdgeInsets.all(6),
+                          child: FittedBox(
+                            child: Text('\$${transactions[index].amount}'),
+                          ),
                         ),
                       ),
-                    ),
-                    title: Text(
-                      transactions[index].title,
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                    subtitle: Text(
-                      DateFormat.yMMMd().format(transactions[index].date),
-                    ),
-                    trailing: ElevatedButton(
-                      child: Icon(Icons.delete),
-                      onPressed: () {},
-                    ),
-                  ),
+                      title: Text(
+                        transactions[index].title,
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                      subtitle: Text(
+                        DateFormat.yMMMd().format(transactions[index].date),
+                      ),
+                      trailing: IconButton(
+                        icon: Icon(Icons.delete),
+                        color: Theme.of(context).errorColor,
+                        onPressed: () {
+                          deleteTransaction(transactions[index].id);
+                        },
+                      )),
                 );
               },
               itemCount: transactions.length,
             ),
     );
   }
-
-  void _deleteTransaction(int index) {
-
-  }
-
 }
