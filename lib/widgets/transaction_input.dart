@@ -1,5 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:peronal_expenses_tracker/widgets/date_adaptive_button.dart';
+import 'package:peronal_expenses_tracker/widgets/submission_adaptive_button.dart';
 
 class TransactionInput extends StatefulWidget {
   final void Function(String, double, DateTime) addTransaction;
@@ -50,20 +53,11 @@ class _TransactionInputState extends State<TransactionInput> {
                             : 'Picked Date: ${DateFormat.yMd().format(_selectedDate)}',
                       ),
                     ),
-                    TextButton(
-                      onPressed: _presentDatePicker,
-                      child: Text(
-                        'choose date',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    )
+                    AdaptiveButton('Choose date', _presentDatePicker),
                   ],
                 ),
               ),
-              ElevatedButton(
-                onPressed: _submitTransaction,
-                child: Text('add transaction'),
-              ),
+              SubmissionAdaptiveButton('add transaction', _submitTransaction),
             ],
           ),
         ),
@@ -82,10 +76,10 @@ class _TransactionInputState extends State<TransactionInput> {
         _selectedDate == DateTime(2018)) return;
 
     this.widget.addTransaction(
-          enteredTitle,
-          enteredAmount,
-          _selectedDate,
-        );
+      enteredTitle,
+      enteredAmount,
+      _selectedDate,
+    );
   }
 
   void _presentDatePicker() {
