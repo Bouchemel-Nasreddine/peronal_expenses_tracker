@@ -76,10 +76,12 @@ class _TransactionInputState extends State<TransactionInput> {
         _selectedDate == DateTime(2018)) return;
 
     this.widget.addTransaction(
-      enteredTitle,
-      enteredAmount,
-      _selectedDate,
-    );
+          enteredTitle,
+          enteredAmount,
+          _selectedDate,
+        );
+
+    Navigator.pop(context);
   }
 
   void _presentDatePicker() {
